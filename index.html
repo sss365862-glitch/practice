@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友情時効裁判所 - 高精度判定・ドラマティック版</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <!-- 外部CSSの読み込み -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+
+    <header class="text-center my-8">
+        <h1 class="text-5xl font-bold text-yellow-600 mb-2 drop-shadow-lg">⚖️ 友情時効裁判所</h1>
+        <p class="text-slate-400 font-sans tracking-widest">量刑判定エンジン v2.0 搭載</p>
+    </header>
+
+    <main class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 原告 -->
+        <div class="bg-slate-800/80 p-6 rounded-2xl border-b-8 border-blue-600 shadow-2xl">
+            <h2 class="text-blue-400 font-bold mb-3 flex justify-between items-center text-xl">
+                <span>原告：訴状</span>
+                <span class="text-xs font-normal opacity-50">PLAINTIFF</span>
+            </h2>
+            <textarea id="plaintiff" class="w-full h-48 p-4 bg-slate-900/90 rounded border border-slate-700 focus:border-blue-500 outline-none text-lg leading-relaxed" placeholder="喧嘩の内容を入力..."></textarea>
+        </div>
+
+        <!-- 被告 -->
+        <div class="bg-slate-800/80 p-6 rounded-2xl border-b-8 border-red-600 shadow-2xl">
+            <h2 class="text-red-400 font-bold mb-3 flex justify-between items-center text-xl">
+                <span>被告：答弁書</span>
+                <span class="text-xs font-normal opacity-50">DEFENDANT</span>
+            </h2>
+            <textarea id="defendant" class="w-full h-48 p-4 bg-slate-900/90 rounded border border-slate-700 focus:border-red-500 outline-none text-lg leading-relaxed" placeholder="反論を入力..."></textarea>
+        </div>
+    </main>
+
+    <div class="mt-12 flex flex-col items-center gap-6">
+        <button onclick="startTrial()" class="relative px-24 py-7 bg-yellow-800 hover:bg-yellow-700 rounded-full transition shadow-[0_10px_0_rgb(90,50,10)] active:translate-y-1 active:shadow-none overflow-hidden group">
+            <span class="relative z-10 text-3xl font-black text-white tracking-[0.3em]">判 決 宣告</span>
+            <div class="absolute inset-0 bg-yellow-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        </button>
+        <button onclick="setSampleData()" class="text-slate-500 hover:text-yellow-500 text-sm font-sans underline decoration-dotted">デモ用データをセット</button>
+    </div>
+
+    <!-- 演出用オーバーレイ -->
+    <div id="loading" class="hidden fixed inset-0 bg-slate-950/95 flex flex-col items-center justify-center z-[200]">
+        <div class="text-9xl mb-8 gavel-anim">🔨</div>
+        <div class="text-yellow-600 text-4xl font-black mb-10 tracking-[0.8em]">量刑判断中</div>
+        <div id="log-container" class="w-[500px] h-48 bg-black border-2 border-slate-800 p-4 overflow-hidden rounded-lg shadow-[0_0_20px_rgba(74,222,128,0.2)]"></div>
+    </div>
+
+    <!-- 判決画面 -->
+    <div id="result-modal" class="hidden fixed inset-0 bg-black z-[300] flex flex-col items-center justify-center p-4 overflow-y-auto">
+        <div class="parchment max-w-3xl w-full p-12 rounded-sm transform scale-90 opacity-0 transition-all duration-700 ease-out relative" id="result-card">
+            <div id="verdict-tag" class="absolute -top-6 left-1/2 -translate-x-1/2 px-8 py-2 bg-red-900 text-white font-black text-2xl shadow-xl">判 決 宣告</div>
+            <div id="verdict-content" class="space-y-10 text-yellow-950"></div>
+            <div class="mt-12 pt-8 border-t-2 border-yellow-900/30">
+                <button onclick="location.reload()" class="w-full py-5 bg-yellow-950 text-white rounded-lg font-black text-2xl hover:bg-black transition shadow-2xl">閉 廷</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 外部JSの読み込み -->
+    <script src="script.js"></script>
+</body>
+</html>
